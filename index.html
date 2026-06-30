@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asite — One platform for everything you build</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Online webfonts (primary). Self-hosted @font-face below renders the same families if the CDN is blocked. -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* Self-hosted fallback fonts (assets/fonts). Poppins substitutes the design's Sofia Pro. */
+@font-face{font-family:'Poppins';font-weight:300;font-display:swap;src:url('assets/fonts/poppins-300.woff2') format('woff2')}
+@font-face{font-family:'Poppins';font-weight:400;font-display:swap;src:url('assets/fonts/poppins-400.woff2') format('woff2')}
+@font-face{font-family:'Poppins';font-weight:500;font-display:swap;src:url('assets/fonts/poppins-500.woff2') format('woff2')}
+@font-face{font-family:'Poppins';font-weight:600;font-display:swap;src:url('assets/fonts/poppins-600.woff2') format('woff2')}
+@font-face{font-family:'Poppins';font-weight:700;font-display:swap;src:url('assets/fonts/poppins-700.woff2') format('woff2')}
+@font-face{font-family:'Poppins';font-weight:900;font-display:swap;src:url('assets/fonts/poppins-900.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-weight:300 700;font-display:swap;src:url('assets/fonts/jetbrains-mono.woff2') format('woff2')}
+
+:root{
+  --charcoal:#231f20;
+  --charcoal-2:#2c2728;
+  --red:#ff3131;
+  --red-press:#e0231f;
+  --teal:#33c7b7;
+  --navy:#0d2745;
+  --white:#ffffff;
+  --paper:#ffffff;
+  --paper2:#f6f5f3;
+  --paper3:#f1efec;
+  --ink:#231f20;
+  --ink-mute:#5c5f63;
+  --ink-faint:#9a9ca0;
+  --ok:#1f9e8d;
+  --line-dark:rgba(255,255,255,.10);
+  --glass:rgba(255,255,255,.03);
+  --sans:'Poppins',system-ui,-apple-system,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --r-btn:10px;
+  --r-card:16px;
+  --r-lg:24px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{overflow-x:clip}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--charcoal);color:var(--white);-webkit-font-smoothing:antialiased;line-height:1.45}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.frame{width:80vw;max-width:1280px;margin:0 auto;padding:0 16px}
+.wrap{width:75vw;max-width:1160px;margin:0 auto;padding:0 16px}
+
+/* eyebrow: red dash + mono uppercase */
+.eyebrow{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;display:inline-flex;align-items:center;gap:14px;color:var(--red)}
+.eyebrow::before{content:"";width:30px;height:1px;background:currentColor}
+.eyebrow.teal{color:var(--teal)}
+.eyebrow.white{color:var(--white)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--sans);font-size:14px;font-weight:700;padding:13px 22px;border:1px solid transparent;border-radius:var(--r-btn);cursor:pointer;transition:.15s;white-space:nowrap}
+.btn-red{background:var(--red);color:#fff}
+.btn-red:hover{background:var(--red-press)}
+.btn-white{background:#fff;color:var(--ink)}
+.btn-white:hover{background:#eee}
+.btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.3)}
+.btn-ghost:hover{border-color:rgba(255,255,255,.65)}
+.btn .key{font-family:var(--mono);font-size:11px;border:1px solid rgba(255,255,255,.45);border-radius:5px;width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;opacity:.85}
+
+.sec{padding:104px 0}
+.head-block{max-width:760px;margin-bottom:54px}
+.head-block h2{font-size:42px;font-weight:700;letter-spacing:-.02em;line-height:1.08;margin-top:22px}
+.head-block h2 .r{color:var(--red)}
+.head-block .lede{font-size:16px;font-weight:300;color:rgba(255,255,255,.45);margin-top:18px;line-height:1.6;max-width:620px}
+
+/* ===== TOP BANNER ===== */
+.topbar{background:var(--navy);color:#fff;text-align:center;font-weight:300;font-size:15px;padding:13px 16px}
+.topbar b{font-weight:600}
+
+/* ===== NAV ===== */
+.nav{background:#fff;position:sticky;top:0;z-index:60;border-bottom:1px solid #eceaf0}
+.nav-inner{width:80vw;max-width:1280px;margin:0 auto;height:69px;display:flex;align-items:center;gap:38px;padding:0}
+.brand img{height:27px;width:auto}
+.nav-links{display:flex;gap:26px;margin-left:12px}
+.nav-links a{font-size:15px;font-weight:500;color:#5a5f66;white-space:nowrap}
+.nav-links a:hover{color:var(--ink)}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:18px}
+.nav-phone{font-family:var(--mono);font-weight:300;font-size:14px;color:rgba(0,0,0,.6);white-space:nowrap}
+.nav-ic{width:19px;height:19px;color:#5a5f66;flex:0 0 auto}
+.nav-login{font-size:15px;font-weight:600;color:var(--red);white-space:nowrap}
+.nav .btn{padding:10px 18px;border-radius:var(--r-btn)}
+
+/* ===== HERO ===== */
+.hero{position:relative;min-height:1000px;display:flex;align-items:center;overflow:hidden;color:#fff}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover}
+.hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(108deg,rgba(0,118,255,.50) 0%,rgba(13,39,69,.66) 46%,rgba(0,0,0,.94) 100%)}
+.hero-inner{position:relative;z-index:1;width:80vw;max-width:1280px;margin:0 auto;padding:120px 16px}
+.hero h1{font-size:120px;font-weight:900;line-height:.96;letter-spacing:-.03em;margin:26px 0 0;max-width:1000px}
+.hero h1 .r{color:var(--red)}
+.hero .sub{font-size:22px;font-weight:300;line-height:1.5;color:rgba(255,255,255,.92);margin-top:30px;max-width:640px}
+.hero-cta{display:flex;gap:14px;margin-top:34px}
+.hero-rule{height:1px;background:rgba(255,255,255,.22);margin:40px 0 20px;max-width:740px}
+.hero-stats{display:flex;gap:34px;flex-wrap:wrap;font-family:var(--mono);font-size:10px;font-weight:300;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.85)}
+
+/* ===== TRUSTED ===== */
+.trusted{padding:60px 0;border-bottom:1px solid var(--line-dark)}
+.logos{display:flex;flex-wrap:wrap;gap:40px 60px;justify-content:center;align-items:center}
+.logos img{height:34px;width:auto;object-fit:contain;opacity:.5;filter:brightness(0) invert(1);transition:opacity .2s}
+.logos img:hover{opacity:.8}
+
+/* ===== VIDEO ===== */
+.video-stage{position:relative;margin-top:8px;aspect-ratio:1060/560;border-radius:var(--r-lg);overflow:hidden;background:#11151d}
+.video-stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.video-stage::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,12,20,.15),rgba(8,12,20,.45))}
+.play{position:absolute;z-index:2;top:50%;left:50%;transform:translate(-50%,-50%);width:74px;height:74px;border-radius:999px;background:var(--red);display:flex;align-items:center;justify-content:center}
+.play::after{content:"";border-left:20px solid #fff;border-top:12px solid transparent;border-bottom:12px solid transparent;margin-left:5px}
+.video-cap{position:absolute;z-index:2;left:0;right:0;bottom:0;display:flex;justify-content:space-between;align-items:center;padding:16px 22px;background:linear-gradient(0deg,rgba(8,12,20,.85),transparent);font-size:13px;font-weight:700}
+.video-cap .r{font-family:var(--mono);font-size:10px;font-weight:300;letter-spacing:.12em;color:rgba(255,255,255,.6)}
+
+/* ===== PLATFORM cards ===== */
+.cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:stretch}
+.pcard{border-radius:var(--r-lg);padding:30px;display:flex;flex-direction:column;min-height:300px;background:var(--glass);border:1px solid var(--line-dark)}
+.pcard.active{background:var(--red);border-color:var(--red)}
+.pcard .ic{width:46px;height:46px;border-radius:12px;border:1.5px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;margin-bottom:auto}
+.pcard.active .ic{border-color:rgba(255,255,255,.7)}
+.pcard .ic svg{width:20px;height:20px}
+.pcard h3{font-size:18px;font-weight:700;margin:26px 0 12px}
+.pcard p{font-size:13px;font-weight:300;line-height:1.6;color:rgba(255,255,255,.45)}
+.pcard.active p{color:rgba(255,255,255,.9)}
+.pcard .tag{font-family:var(--mono);font-size:10px;font-weight:300;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-top:20px}
+.pcard.active .tag{color:rgba(255,255,255,.6)}
+
+/* ===== PRODUCT app mockup ===== */
+.app{border-radius:var(--r-lg);overflow:hidden;box-shadow:0 40px 90px rgba(0,0,0,.5);display:grid;grid-template-columns:210px 1fr;background:var(--paper);color:var(--ink);font-size:12px}
+.app-side{background:var(--navy);color:#fff;padding:18px 16px;min-height:520px}
+.app-brand{display:flex;align-items:center;gap:9px;font-weight:700;font-size:14px;color:#fff;letter-spacing:.02em;margin-bottom:26px}
+.app-brand img{width:20px;height:20px}
+.app-nav a{display:flex;align-items:center;justify-content:space-between;padding:9px 11px;border-radius:8px;color:rgba(255,255,255,.6);font-size:12px;font-weight:500;margin-bottom:3px}
+.app-nav a.on{background:rgba(255,255,255,.1);color:#fff}
+.app-nav a .ct{font-family:var(--mono);font-size:10px;color:rgba(255,255,255,.4)}
+.app-side .grp{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.38);margin:22px 0 8px 11px}
+.app-main{display:flex;flex-direction:column;background:var(--paper)}
+.app-top{display:flex;align-items:center;gap:14px;padding:13px 20px;border-bottom:1px solid #eceae6;background:var(--paper2)}
+.app-top .crumb{font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+.app-top .search{margin-left:auto;display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #e6e3de;border-radius:8px;padding:6px 10px;color:var(--ink-faint);font-size:12px}
+.app-top .search .k{font-family:var(--mono);font-size:10px;background:#efece7;border-radius:4px;padding:1px 5px}
+.app-top .av{width:26px;height:26px;border-radius:999px;background:var(--navy);color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;font-weight:600}
+.app-head{display:flex;align-items:center;gap:14px;padding:18px 20px 6px}
+.app-head h4{font-size:19px;font-weight:700;color:var(--ink)}
+.app-head .meta{font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+.app-head .btn{margin-left:auto;font-size:12px;padding:8px 14px}
+.app-body{padding:8px 20px 22px;display:grid;grid-template-columns:1fr 300px;gap:18px;flex:1}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#eceae6;border:1px solid #eceae6;border-radius:10px;overflow:hidden;margin-bottom:14px}
+.metric{background:#fff;padding:14px 16px}
+.metric .v{font-size:26px;font-weight:700;color:var(--ink)}
+.metric .v.red{color:var(--red)}
+.metric .l{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-mute);margin-top:5px}
+.subhead{display:flex;align-items:center;gap:12px;padding:6px 0 8px}
+.subhead .t{font-size:13px;font-weight:700}
+.toggle{margin-left:auto;display:flex;gap:4px;font-size:12px}
+.toggle b{font-weight:600;color:var(--ink)}.toggle span{color:var(--ink-faint)}
+.drow{display:grid;grid-template-columns:96px 1fr auto auto;gap:10px;align-items:center;padding:11px 4px;border-top:1px solid #efece7;font-size:12px}
+.drow .ref{font-family:var(--mono);font-size:11px;color:var(--red)}
+.drow .ref.mute{color:var(--ink-faint)}
+.drow .ti{color:var(--ink);font-weight:500}
+.pill{font-family:var(--mono);font-size:10px;font-weight:500;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.pill.block{color:var(--red);background:#ffe9e9}
+.pill.review{color:#b25e00;background:#fbeede}
+.pill.ok{color:var(--ok);background:#e3f4f1}
+.drow .when{font-family:var(--mono);font-size:10px;color:var(--ink-faint)}
+.sidepanel{background:var(--paper2);border:1px solid #ebe8e3;border-radius:12px;padding:16px}
+.sidepanel .ref{font-family:var(--mono);font-size:11px;color:var(--red);margin-bottom:4px}
+.sidepanel h5{font-size:15px;font-weight:700;margin-bottom:12px}
+.kv{display:flex;justify-content:space-between;padding:8px 0;border-top:1px solid #ebe8e3;font-size:12px}
+.kv .k{color:var(--ink-faint)}
+.kv .v{font-weight:500;color:var(--ink)}
+.kv .v.ok{color:var(--ok)}
+.intel{margin-top:14px;background:#fff;border:1px solid #e7eeed;border-left:3px solid var(--teal);border-radius:8px;padding:13px}
+.intel .h{font-size:12px;font-weight:700;display:flex;align-items:center;gap:7px;margin-bottom:7px}
+.intel .h .dot{width:7px;height:7px;border-radius:999px;background:var(--teal)}
+.intel p{font-size:12px;color:var(--ink);line-height:1.5}
+.intel .cite{font-family:var(--mono);font-size:9px;color:var(--ok);margin-top:8px;letter-spacing:.03em}
+
+/* folder tabs + file grid (prod02) */
+.ftabs{display:flex;gap:8px;padding:6px 0 14px}
+.ftab{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:500;color:var(--ink);border:1px solid #e6e3de;border-radius:8px;padding:7px 12px}
+.ftab.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.ftab .n{font-family:var(--mono);font-size:10px;opacity:.6}
+.fgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.fcard{border:1px solid #ebe8e3;border-radius:10px;padding:14px;background:#fff}
+.fcard .thumb{height:62px;border-radius:6px;background:linear-gradient(135deg,#eef0f2,#dfe3e7);margin-bottom:12px;position:relative}
+.fcard .thumb::after{content:"";position:absolute;inset:14px;border:1px solid #c7ccd2}
+.fcard .ti{font-size:12px;font-weight:600;color:var(--ink)}
+.fcard .rev{font-family:var(--mono);font-size:10px;color:var(--ink-faint);margin-top:4px}
+
+/* analytics chart (prod04) */
+.app-body.single{grid-template-columns:1fr}
+.chart{display:flex;align-items:flex-end;gap:7px;height:170px;padding:16px 0;border-bottom:1px solid #efece7}
+.chart .bar{flex:1;background:#e7e4df;border-radius:3px 3px 0 0}
+.chart .bar.hot{background:var(--red)}
+.an-grid{display:grid;grid-template-columns:1fr 300px;gap:18px;margin-top:14px}
+.an-metrics{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#eceae6;border:1px solid #eceae6;border-radius:10px;overflow:hidden;align-self:start}
+
+/* feature captions row under mockups */
+.cap3{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:40px;border-top:1px solid var(--line-dark)}
+.capx{padding:28px 26px 0;border-left:1px solid var(--line-dark)}
+.capx:first-child{border-left:0;padding-left:0}
+.capx h4{font-size:15px;font-weight:700;margin-bottom:10px}
+.capx p{font-size:13px;font-weight:300;line-height:1.6;color:rgba(255,255,255,.45)}
+.capx .tag{font-family:var(--mono);font-size:10px;font-weight:300;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-top:14px}
+
+/* ===== NUMBERS ===== */
+.ncards{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.ncard{border-radius:var(--r-lg);padding:28px;min-height:208px;display:flex;flex-direction:column;background:var(--glass);border:1px solid var(--line-dark)}
+.ncard.active{background:var(--red);border-color:var(--red)}
+.ncard .v{font-size:38px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.ncard p{font-size:12px;font-weight:300;color:rgba(255,255,255,.45);margin-top:14px;line-height:1.5}
+.ncard.active p{color:rgba(255,255,255,.9)}
+.ncard .tag{font-family:var(--mono);font-size:10px;font-weight:300;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.28);margin-top:auto;padding-top:18px}
+.ncard.active .tag{color:rgba(255,255,255,.6)}
+
+/* ===== TESTIMONIAL ===== */
+.quote{max-width:1000px}
+.quote blockquote{font-size:34px;font-weight:300;line-height:1.32;letter-spacing:-.01em;margin:24px 0 22px}
+.quote blockquote .r{color:var(--red);font-weight:700}
+.quote .who{font-family:var(--mono);font-size:11px;font-weight:300;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.28)}
+
+/* ===== CASES ===== */
+.cases{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.ccard{border-radius:var(--r-lg);overflow:hidden;background:var(--glass);border:1px solid var(--line-dark)}
+.ccard .img{position:relative;aspect-ratio:520/220;overflow:hidden;background:#11151d}
+.ccard .img img{width:100%;height:100%;object-fit:cover}
+.ccard .img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,15,28,.1),rgba(8,15,28,.45))}
+.ccard .body{padding:26px}
+.ccard .k{font-family:var(--mono);font-size:10px;font-weight:300;letter-spacing:.1em;text-transform:uppercase;color:var(--red)}
+.ccard h3{font-size:20px;font-weight:700;margin:14px 0 12px;line-height:1.25}
+.ccard p{font-size:13px;font-weight:300;line-height:1.6;color:rgba(255,255,255,.45)}
+.ccard .src{font-family:var(--mono);font-size:10px;font-weight:300;letter-spacing:.08em;color:rgba(255,255,255,.7);margin-top:18px;display:flex;align-items:center;gap:8px}
+.ccard .src::before{content:"";width:14px;height:1px;background:var(--red)}
+
+/* ===== SECURITY ===== */
+.seccard{background:var(--charcoal-2);border:1px solid var(--line-dark);border-radius:var(--r-lg);padding:34px 38px;display:flex;align-items:center;gap:30px}
+.seccard .shield{width:40px;height:46px;flex:0 0 auto;color:var(--teal)}
+.seccard .txt{flex:1}
+.seccard h3{font-size:16px;font-weight:700;margin-bottom:10px}
+.seccard p{font-size:13px;font-weight:300;line-height:1.6;color:rgba(255,255,255,.45);max-width:620px}
+.seccard .certs{font-family:var(--mono);font-size:10px;font-weight:300;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);text-align:right;line-height:1.9;white-space:nowrap}
+
+/* ===== CTA ===== */
+.cta{background:var(--red);color:#fff;text-align:center;padding:120px 0;position:relative;overflow:hidden}
+.cta .arrow{position:absolute;right:-40px;top:50%;transform:translateY(-50%);width:340px;height:280px;border:1.5px solid rgba(255,255,255,.18);border-radius:60px;display:flex;align-items:center;justify-content:center}
+.cta .arrow svg{width:150px;height:150px;color:rgba(255,255,255,.22)}
+.cta-inner{position:relative;z-index:1}
+.cta h2{font-size:58px;font-weight:900;letter-spacing:-.03em;line-height:1}
+.cta p{font-size:16px;font-weight:300;color:rgba(255,255,255,.88);margin:22px auto 0;max-width:560px;line-height:1.6}
+.cta .btn{margin:34px 0 26px}
+.cta .foot{font-family:var(--mono);font-size:10px;font-weight:300;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.66)}
+
+/* ===== FOOTER ===== */
+.footer{padding:72px 0 30px;border-top:1px solid var(--line-dark)}
+.footer-grid{display:grid;grid-template-columns:1.6fr repeat(4,1fr);gap:32px}
+.footer .brand{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:600;color:#fff;margin-bottom:18px}
+.footer .brand img{width:24px;height:25px}
+.footer .desc{font-size:12px;font-weight:300;line-height:1.7;color:rgba(255,255,255,.55);max-width:280px}
+.footer .col h5{font-family:var(--mono);font-size:10px;font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:16px}
+.footer .col a{display:block;font-size:13px;font-weight:300;color:rgba(255,255,255,.8);margin-bottom:11px}
+.footer .col a:hover{color:#fff}
+.footer-bottom{display:flex;flex-wrap:wrap;gap:8px 26px;align-items:center;border-top:1px solid var(--line-dark);margin-top:50px;padding-top:24px;font-family:var(--mono);font-size:10px;font-weight:300;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.4)}
+.footer-bottom a:hover{color:#fff}
+.footer-bottom .sp{margin-left:auto}
+
+@media(max-width:1100px){
+  .frame,.wrap,.nav-inner,.hero-inner{width:auto;max-width:none;margin:0;padding:0 28px}
+}
+@media(max-width:980px){
+  .sec{padding:72px 0}
+  .hero h1{font-size:74px}
+  .head-block h2,.cta h2{font-size:36px}
+  .cards3,.ncards,.cases,.cap3,.footer-grid{grid-template-columns:1fr}
+  .capx{border-left:0;padding-left:0}
+  .app{grid-template-columns:1fr}.app-side{display:none}
+  .app-body,.an-grid{grid-template-columns:1fr}
+  .fgrid{grid-template-columns:1fr 1fr}
+  .seccard{flex-direction:column;align-items:flex-start;gap:18px}
+  .seccard .certs{text-align:left}
+  .cta .arrow{display:none}
+  .footer-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:620px){
+  .hero{min-height:auto}
+  .hero-inner{padding:84px 18px 72px}
+  .hero h1{font-size:40px;letter-spacing:-.02em}
+  .hero .sub{font-size:17px}
+  .hero-cta{flex-wrap:wrap}
+  .metrics,.an-metrics,.fgrid{grid-template-columns:1fr 1fr}
+  .nav-links,.nav-phone,.nav-ic,.nav-login{display:none}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom .sp{margin-left:0;width:100%}
+}
+</style>
+</head>
+<body>
+
+<!-- BANNER -->
+<div class="topbar">New: AI-powered workflows for owners, contractors and asset operators. <a href="#"><b>Discover what's new →</b></a></div>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#"><img src="asite_logo.svg" alt="Asite" width="102" height="27"></a>
+    <nav class="nav-links">
+      <a href="#">Solutions</a><a href="#">Platform</a><a href="#">Industries</a>
+      <a href="#">Customers</a><a href="#">Resources</a><a href="#">Pricing</a>
+    </nav>
+    <div class="nav-right">
+      <span class="nav-phone">(+44) 0700 767 8814</span>
+      <svg class="nav-ic" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M3 12h18M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18" stroke="currentColor" stroke-width="1.6"/></svg>
+      <svg class="nav-ic" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 5 5" stroke="currentColor" stroke-width="1.8"/></svg>
+      <a class="nav-login" href="#">Log in</a>
+      <a class="btn btn-red" href="#">Request a demo</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"><img src="assets/city-night.jpg" alt="Construction cranes against a city skyline"></div>
+  <div class="hero-inner">
+    <span class="eyebrow white">Build without limits</span>
+    <h1>One platform for everything you <span class="r">build.</span></h1>
+    <p class="sub">A comprehensive data platform for your asset and construction project data. Connect the design, build, and operational phases of your assets — and improve information management, insight, and profitability.</p>
+    <div class="hero-cta">
+      <a class="btn btn-red" href="#">Book a demo →</a>
+      <a class="btn btn-ghost" href="#">Explore the platform <span class="key">↵</span></a>
+    </div>
+    <div class="hero-rule"></div>
+    <div class="hero-stats">
+      <span>Defining the CDE category since 2001</span>
+      <span>84,000+ companies</span>
+      <span>ISO 19650</span>
+    </div>
+  </div>
+</section>
+
+<!-- TRUSTED -->
+<section class="trusted">
+  <div class="wrap logos">
+    <img src="assets/logos/TFL-mono.png" alt="Transport for London">
+    <img src="assets/logos/Laing-mono.png" alt="Laing O'Rourke">
+    <img src="assets/logos/Kier-mono.png" alt="Kier">
+    <img src="assets/logos/McLaren-mono.png" alt="McLaren">
+    <img src="assets/logos/Berkeley-mono.png" alt="Berkeley Group">
+    <img src="assets/logos/Royal-mono.png" alt="Royal HaskoningDHV">
+  </div>
+</section>
+
+<!-- VIDEO -->
+<section class="sec">
+  <div class="wrap">
+    <div class="head-block">
+      <span class="eyebrow">See it work</span>
+      <h2>Two minutes on the project</h2>
+      <p class="lede">How a hold is found, named, answered from the inbox, and released — every step recorded, from first flag to release.</p>
+    </div>
+    <div class="video-stage">
+      <img src="assets/city-night.jpg" alt="Construction site at dusk">
+      <div class="play"></div>
+      <div class="video-cap"><span>Watch: the platform in action</span><span class="r">02:14 · PRODUCT TOUR</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PLATFORM -->
+<section class="sec">
+  <div class="wrap">
+    <div class="head-block">
+      <span class="eyebrow">The platform</span>
+      <h2>Transform project risk into clarity and control</h2>
+      <p class="lede">Three products, one source of truth — the platform your project actually runs on.</p>
+    </div>
+    <div class="cards3">
+      <div class="pcard">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.7"/></svg></span>
+        <h3>Common Data Environment</h3>
+        <p>A single source of truth for your information. Control project data in a standards-based environment, end to end.</p>
+        <div class="tag">Defining the category since 2001</div>
+      </div>
+      <div class="pcard active">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="#fff" stroke-width="1.8"/></svg></span>
+        <h3>Asite 3D Repo</h3>
+        <p>BIM design coordination in the browser. Augment and interrogate your models through open, transparent collaborative working — on projects of every size.</p>
+        <div class="tag">Open standards · in-browser</div>
+      </div>
+      <div class="pcard">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M8 9h8M8 13h5" stroke="currentColor" stroke-width="1.5"/></svg></span>
+        <h3>Asite Playbook</h3>
+        <p>The go-to tool for Information Managers: configure information delivery processes and stay aligned to ISO 19650.</p>
+        <div class="tag">ISO 19650 · delivery plans</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCT 01 -->
+<section class="sec">
+  <div class="wrap">
+    <div class="head-block">
+      <span class="eyebrow">01 — Product</span>
+      <h2>One source of truth, seen at every level</h2>
+      <p class="lede">Read in the boardroom, on the first morning, and at the cut of the trowel — the same record, everywhere.</p>
+    </div>
+    <div class="app">
+      <aside class="app-side">
+        <div class="app-brand"><img src="asite-mark-white.svg" alt="">ASITE</div>
+        <nav class="app-nav">
+          <a class="on">Register</a>
+          <a>Documents <span class="ct">14,820</span></a>
+          <a>3D Repo</a>
+          <a>RFIs <span class="ct">7</span></a>
+        </nav>
+        <div class="grp">Project</div>
+        <nav class="app-nav">
+          <a>Dashboard</a><a>Site Diary</a><a>Workflows</a>
+        </nav>
+      </aside>
+      <div class="app-main">
+        <div class="app-top">
+          <span class="crumb">app.asite.com / mer-tower-c / register</span>
+          <span class="search">Search <span class="k">⌘K</span></span>
+          <span class="av">CN</span>
+        </div>
+        <div class="app-head">
+          <h4>Project register</h4><span class="meta">MER-TOWER-C · 14,820 FILES · WK 24</span>
+          <a class="btn btn-red">Issue</a>
+        </div>
+        <div class="app-body">
+          <div>
+            <div class="metrics">
+              <div class="metric"><div class="v red">1</div><div class="l">Active hold</div></div>
+              <div class="metric"><div class="v">7</div><div class="l">Open RFIs</div></div>
+              <div class="metric"><div class="v">98%</div><div class="l">On time</div></div>
+              <div class="metric"><div class="v">2,847</div><div class="l">Filed · Q2</div></div>
+            </div>
+            <div class="subhead"><span class="t">Documents</span><span class="toggle"><b>List</b><span>Grid</span></span></div>
+            <div class="drow"><span class="ref">AST-2026-204</span><span class="ti">Tower C — Level 12 General Arrangement</span><span class="pill block">Blocked</span><span class="when">C03 · 24 Jun</span></div>
+            <div class="drow"><span class="ref">AST-2026-198</span><span class="ti">MEP coordination model — Zone 4</span><span class="pill review">In review</span><span class="when">B11 · 23 Jun</span></div>
+            <div class="drow"><span class="ref mute">AST-2026-187</span><span class="ti">Structural calcs — transfer beam TB-09</span><span class="pill ok">Approved</span><span class="when">C01 · 21 Jun</span></div>
+            <div class="drow"><span class="ref mute">AST-2026-176</span><span class="ti">Setting-out survey grid</span><span class="pill ok">Approved</span><span class="when">C02 · 20 Jun</span></div>
+          </div>
+          <div class="sidepanel">
+            <div class="ref">AST-2026-204 · C03</div>
+            <h5>Tower C — Level 12 GA</h5>
+            <div class="kv"><span class="k">Status</span><span class="v" style="color:var(--red)">Blocked — RFI-204</span></div>
+            <div class="kv"><span class="k">Discipline</span><span class="v">Structures</span></div>
+            <div class="kv"><span class="k">Audit</span><span class="v ok">✓ Logged</span></div>
+            <div class="intel">
+              <div class="h"><span class="dot"></span>Asite Intelligence</div>
+              <p>This hold traces to a clash between duct DT-12 and the transfer beam — three documents disagree on the soffit level.</p>
+              <div class="cite">✓ Cites: AST-204, 198, 187</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="cap3">
+      <div class="capx"><h4>First-run welcome</h4><p>Day one opens with a welcome, not a wall — guided from the first login to the first issued document.</p><div class="tag">Day one · guided</div></div>
+      <div class="capx"><h4>Project dashboard</h4><p>Milestones, pending tasks, and the one active hold — the position read at a glance, every morning.</p><div class="tag">Holds · RFI-linked</div></div>
+      <div class="capx"><h4>Site Diary</h4><p>The day's weather, labour, and pours — recorded once, on the record, and never argued again.</p><div class="tag">Week 24</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCT 02 -->
+<section class="sec">
+  <div class="wrap">
+    <div class="head-block">
+      <span class="eyebrow">02 — Work on the go</span>
+      <h2>Files to fingertips</h2>
+      <p class="lede">A controlled files workspace — folders first, live previews, and every revision on the record.</p>
+    </div>
+    <div class="app">
+      <aside class="app-side">
+        <div class="app-brand"><img src="asite-mark-white.svg" alt="">ASITE</div>
+        <nav class="app-nav">
+          <a>Register <span class="ct">14,820</span></a>
+          <a class="on">Documents</a>
+          <a>3D Repo</a>
+          <a>Drawings</a>
+        </nav>
+        <div class="grp">Folders</div>
+        <nav class="app-nav"><a>Structures</a><a>MEP</a><a>Architecture</a></nav>
+      </aside>
+      <div class="app-main">
+        <div class="app-top">
+          <span class="crumb">app.asite.com / city-hospital / files</span>
+          <span class="search">Search <span class="k">⌘K</span></span>
+          <span class="av">CN</span>
+        </div>
+        <div class="app-head">
+          <h4>Drawings</h4><span class="meta">248 FILES · 12 FOLDERS</span>
+          <a class="btn btn-red">Upload</a>
+        </div>
+        <div class="app-body single" style="display:block">
+          <div class="ftabs">
+            <span class="ftab on">Structures <span class="n">96</span></span>
+            <span class="ftab">MEP <span class="n">74</span></span>
+            <span class="ftab">Architecture <span class="n">78</span></span>
+          </div>
+          <div class="fgrid">
+            <div class="fcard"><div class="thumb"></div><div class="ti">L12 — General Arrangement</div><div class="rev">REV C03 · DWG</div></div>
+            <div class="fcard"><div class="thumb"></div><div class="ti">Core setting-out</div><div class="rev">REV C01 · DWG</div></div>
+            <div class="fcard"><div class="thumb"></div><div class="ti">Fire strategy</div><div class="rev">REV A04 · PDF</div></div>
+            <div class="fcard"><div class="thumb"></div><div class="ti">Transfer beam TB-09</div><div class="rev">REV C01 · IFC</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="cap3">
+      <div class="capx"><h4>Document canvas</h4><p>Drawings carry their own conversation — annotations and comments pinned to the revision they belong to.</p><div class="tag">Annotations · comments</div></div>
+      <div class="capx"><h4>Native editor</h4><p>Specifications written in the product — versioned, reviewable, and published straight to the register.</p><div class="tag">Living documents</div></div>
+      <div class="capx"><h4>Command palette</h4><p>⌘K reaches every file, RFI, doc, and conversion — without leaving the keyboard.</p><div class="tag">⌘K · everything</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCT 04 -->
+<section class="sec">
+  <div class="wrap">
+    <div class="head-block">
+      <span class="eyebrow">04 — Data &amp; intelligence</span>
+      <h2>Readings, not reports</h2>
+      <p class="lede">Fourteen weeks of project activity on one panel — with the intelligence to read it, citing your data and nothing else.</p>
+    </div>
+    <div class="app">
+      <aside class="app-side">
+        <div class="app-brand"><img src="asite-mark-white.svg" alt="">ASITE</div>
+        <nav class="app-nav">
+          <a>Register</a>
+          <a class="on">Analytics</a>
+          <a>RFIs <span class="ct">7</span></a>
+        </nav>
+        <div class="grp">Reports</div>
+        <nav class="app-nav"><a>QPR pack</a><a>Exports</a></nav>
+      </aside>
+      <div class="app-main">
+        <div class="app-top">
+          <span class="crumb">app.asite.com / mer-tower-c / analytics</span>
+          <span class="search">Search <span class="k">⌘K</span></span>
+          <span class="av">CN</span>
+        </div>
+        <div class="app-head">
+          <h4>Register activity</h4><span class="meta">14 WEEKS · ISSUED vs OUTSTANDING</span>
+          <a class="btn btn-red">Export to QPR pack</a>
+        </div>
+        <div class="app-body" style="display:block">
+          <div class="chart">
+            <div class="bar" style="height:34%"></div><div class="bar" style="height:46%"></div>
+            <div class="bar" style="height:40%"></div><div class="bar" style="height:58%"></div>
+            <div class="bar" style="height:52%"></div><div class="bar" style="height:66%"></div>
+            <div class="bar" style="height:60%"></div><div class="bar" style="height:74%"></div>
+            <div class="bar" style="height:70%"></div><div class="bar hot" style="height:100%"></div>
+            <div class="bar" style="height:64%"></div><div class="bar" style="height:50%"></div>
+            <div class="bar" style="height:44%"></div><div class="bar" style="height:36%"></div>
+          </div>
+          <div class="an-grid">
+            <div class="an-metrics">
+              <div class="metric"><div class="v">97%</div><div class="l">OCR confidence</div></div>
+              <div class="metric"><div class="v red">1</div><div class="l">Active hold</div></div>
+            </div>
+            <div class="sidepanel" style="margin:0">
+              <div class="intel" style="margin:0">
+                <div class="h"><span class="dot"></span>Asite Intelligence</div>
+                <p>Week 10 issued the most — the spike aligns with the Zone 4 coordination release.</p>
+                <div class="cite">✓ From the same register figures</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="cap3">
+      <div class="capx"><h4>Convert — paper to data</h4><p>Site paper in, structured fields out — confidence scored, filed against the right record.</p><div class="tag">OCR · 97% confidence</div></div>
+      <div class="capx"><h4>Asite Intelligence</h4><p>Answers cite your data, and nothing writes without your say-so — reads the record, never rewrites it.</p><div class="tag">✦ ⌘I · cites your data</div></div>
+      <div class="capx"><h4>Executive packs</h4><p>Project figures feed the QPR pack directly — export the same numbers the register holds.</p><div class="tag">Export feeds QPR</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- NUMBERS -->
+<section class="sec">
+  <div class="wrap">
+    <div class="head-block">
+      <span class="eyebrow">Proven project delivery &amp; controls</span>
+      <h2>The numbers are the argument</h2>
+    </div>
+    <div class="ncards">
+      <div class="ncard active"><div class="v">84,000+</div><p>companies trust Asite with their project data</p><div class="tag">And counting</div></div>
+      <div class="ncard"><div class="v">2001</div><p>defining the CDE category since the beginning</p><div class="tag">25 years</div></div>
+      <div class="ncard"><div class="v">70%</div><p>tendering cost saved by Laing O'Rourke on Heathrow T5 packages</p><div class="tag">Packages &gt; £10M</div></div>
+      <div class="ncard"><div class="v">1</div><p>source of truth — every phase, every partner, every asset</p><div class="tag">Concept to completion</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="sec">
+  <div class="wrap quote">
+    <span class="eyebrow teal">In their words</span>
+    <blockquote>"Missed information leads to costly mistakes. <span class="r">Asite keeps your team on the same page</span> — so nothing falls through the cracks."</blockquote>
+    <div class="who">Programme Director · Tier-1 infrastructure contractor</div>
+  </div>
+</section>
+
+<!-- CASES -->
+<section class="sec">
+  <div class="wrap">
+    <div class="head-block">
+      <span class="eyebrow">Case studies</span>
+      <h2>Proven on the projects that can't afford to fail</h2>
+    </div>
+    <div class="cases">
+      <div class="ccard">
+        <div class="img"><img src="assets/site-team-aerial.jpg" alt="Major infrastructure under construction"></div>
+        <div class="body">
+          <div class="k">Case study · Infrastructure</div>
+          <h3>Helping rebuild New York's transit system</h3>
+          <p>New York's MTA needed private developers, public agencies, and utility companies to coordinate on one record — across a programme that couldn't stop.</p>
+          <div class="src">Metropolitan Transportation Authority</div>
+        </div>
+      </div>
+      <div class="ccard">
+        <div class="img"><img src="assets/people-working.jpg" alt="Workers on a major build"></div>
+        <div class="body">
+          <div class="k">Case study · Aviation</div>
+          <h3>70% saved on T5 tendering packages</h3>
+          <p>Laing O'Rourke, first-tier civil engineering provider on BAA's Terminal 5, cut the cost of tendering its larger packages by collaborating on Asite.</p>
+          <div class="src">Laing O'Rourke · Heathrow Terminal 5</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECURITY -->
+<section class="sec">
+  <div class="wrap">
+    <div class="head-block">
+      <span class="eyebrow">Why Asite is the preferred CDE</span>
+      <h2>Security and data privacy, by design and by default</h2>
+    </div>
+    <div class="seccard">
+      <svg class="shield" viewBox="0 0 24 28" fill="none"><path d="M12 2 3 6v8c0 6 4 9 9 11 5-2 9-5 9-11V6l-9-4Z" stroke="currentColor" stroke-width="1.5"/><path d="m8 14 3 3 5-6" stroke="currentColor" stroke-width="1.7"/></svg>
+      <div class="txt">
+        <h3>Your data is the project record. We treat it that way.</h3>
+        <p>Standards-based information management with audited workflows, controlled distribution, and information that survives staff turnover, project end dates, and storage wipes.</p>
+      </div>
+      <div class="certs">ISO 19650 · ISO 27001<br>SOC 2 · Certifications ↗</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="arrow"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12h15M12 5l7 7-7 7" stroke="currentColor" stroke-width="1.5"/></svg></div>
+  <div class="cta-inner">
+    <h2>See the whole project.</h2>
+    <p>Book a product demo — see Asite in action on a project like yours, with your standards and your supply chain.</p>
+    <a class="btn btn-white" href="#">Book a demo</a>
+    <div class="foot">Connecting the physical, digital &amp; human</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="frame">
+    <div class="footer-grid">
+      <div>
+        <div class="brand"><img src="asite-mark-white.svg" alt="">ASITE</div>
+        <p class="desc">The cloud collaboration system for seamless collaboration across disciplines — from concept to completion, and beyond.</p>
+      </div>
+      <div class="col"><h5>Products</h5><a href="#">Common Data Environment</a><a href="#">Asite Field</a><a href="#">Project Financials</a><a href="#">Asite Playbook</a><a href="#">aMail</a><a href="#">3D Repo</a></div>
+      <div class="col"><h5>Company</h5><a href="#">About</a><a href="#">Leadership</a><a href="#">Awards</a><a href="#">Offices</a><a href="#">Careers</a></div>
+      <div class="col"><h5>Insights</h5><a href="#">Case studies</a><a href="#">Blog</a><a href="#">Webinars</a><a href="#">News</a><a href="#">Events</a></div>
+      <div class="col"><h5>Ecosystem</h5><a href="#">Integrations</a><a href="#">Marketplace</a><a href="#">API guide</a><a href="#">Become a partner</a></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Asite</span><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Carbon Reduction Plan</a>
+      <span class="sp">Registered · London</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
